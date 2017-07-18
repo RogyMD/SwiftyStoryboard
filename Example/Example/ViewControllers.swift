@@ -9,19 +9,16 @@
 import UIKit
 import SwiftyStoryboard
 
-/// Enum example of `Storyboard`.
-enum AppStoryboard<T: UIViewController>: String, Storyboard {
-  typealias Scene = T
-  
+/// Enum example of `StoryboardType`.
+enum AppStoryboard: String, StoryboardType {
   case main = "Main"
 }
 
 
-/// Struct example of `Storyboard`.
-/// - Important: In case that `Storyboard` is a `struct` you are **forced to adopt** `protocol` `ExpressibleByStringLiteral`.
-struct AppStoryboardStruct<T: UIViewController>: RawRepresentable, Storyboard, ExpressibleByStringLiteral {
+/// Struct example of `StoryboardType`.
+/// - Important: In case that `StoryboardType` is a `struct` you are **forced to adopt** `protocol` `ExpressibleByStringLiteral`.
+struct AppStoryboardStruct: RawRepresentable, StoryboardType, ExpressibleByStringLiteral {
   typealias RawValue = String
-  typealias Scene = T
   
   let rawValue: String
   
@@ -41,7 +38,7 @@ struct AppStoryboardStruct<T: UIViewController>: RawRepresentable, Storyboard, E
     rawValue = value
   }
   
-  static var main: AppStoryboardStruct<T> { return "Main" }
+  static var main: AppStoryboardStruct { return "Main" }
 }
 
 class FirstViewController: UIViewController, SeguePerformer {
@@ -49,7 +46,7 @@ class FirstViewController: UIViewController, SeguePerformer {
   typealias SegueType = Segue
   
   // Nested enum `Segue` with that define `UIStoryboardSegue` identifier as `case`
-  enum Segue: String, SwiftyStoryboard.Segue {
+  enum Segue: String, StoryboardSegueType {
     case second
   }
   
@@ -65,8 +62,9 @@ class FirstViewController: UIViewController, SeguePerformer {
   }
 }
 
-extension FirstViewController: Scene {
-  class var sceneID: String {
+extension FirstViewController: StoryboardSceneType {
+  // Defined custom scene identifier
+  class var sceneIdentifier: String {
     return "First"
   }
 }
@@ -75,11 +73,11 @@ class SecondViewController: UIViewController {
   
   @IBAction func pushFirstScene(_ sender: Any?) {
     // Example how to load an instance of FirstViewController from Main.storyboard.
-    let viewController = AppStoryboard<FirstViewController>.main.scene
+    let viewController = AppStoryboard.main.scene() as FirstViewController
     navigationController?.pushViewController(viewController, animated: true)
   }
   
 }
 
-extension SecondViewController: Scene {}
+extension SecondViewController: StoryboardSceneType {}
 
