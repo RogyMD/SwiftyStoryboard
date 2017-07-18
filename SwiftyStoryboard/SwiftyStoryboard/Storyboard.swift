@@ -9,7 +9,7 @@
 import UIKit
 
 /// Represents a type that should load an `UIStoryboard` instance.
-public protocol Storyboard {
+public protocol StoryboardType {
   
   /// A type that represents a `UIViewController` subclass.
   associatedtype Scene: UIViewController
@@ -22,7 +22,7 @@ public protocol Storyboard {
   
 }
 
-public extension Storyboard {
+public extension StoryboardType {
   
   var bundle: Bundle? {
     return nil
@@ -34,19 +34,19 @@ public extension Storyboard {
   
 }
 
-public extension Storyboard where Self.Scene: SceneIdentifiable {
+public extension StoryboardType where Self: RawRepresentable, Self.RawValue == String {
   
-  /// An **new** `Scene` instance.
-  var scene: Scene {
-    return storyboard.instantiateViewController(withIdentifier: Scene.sceneID) as! Scene
+  var storyboard: UIStoryboard {
+    return UIStoryboard(name: rawValue, bundle: bundle)
   }
   
 }
 
-public extension Storyboard where Self: RawRepresentable, Self.RawValue == String {
+public extension StoryboardType where Self.Scene: StoryboardSceneType {
   
-  var storyboard: UIStoryboard {
-    return UIStoryboard(name: rawValue, bundle: bundle)
+  /// An **new** `Scene` instance.
+  var scene: Scene {
+    return storyboard.instantiateViewController(withIdentifier: Scene.sceneIdentifier) as! Scene
   }
   
 }
