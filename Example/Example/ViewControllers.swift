@@ -10,18 +10,15 @@ import UIKit
 import SwiftyStoryboard
 
 /// Enum example of `StoryboardType`.
-enum AppStoryboard<T: UIViewController>: String, StoryboardType {
-  typealias Scene = T
-  
+enum AppStoryboard: String, StoryboardType {
   case main = "Main"
 }
 
 
 /// Struct example of `StoryboardType`.
 /// - Important: In case that `StoryboardType` is a `struct` you are **forced to adopt** `protocol` `ExpressibleByStringLiteral`.
-struct AppStoryboardStruct<T: UIViewController>: RawRepresentable, StoryboardType, ExpressibleByStringLiteral {
+struct AppStoryboardStruct: RawRepresentable, StoryboardType, ExpressibleByStringLiteral {
   typealias RawValue = String
-  typealias Scene = T
   
   let rawValue: String
   
@@ -41,7 +38,7 @@ struct AppStoryboardStruct<T: UIViewController>: RawRepresentable, StoryboardTyp
     rawValue = value
   }
   
-  static var main: AppStoryboardStruct<T> { return "Main" }
+  static var main: AppStoryboardStruct { return "Main" }
 }
 
 class FirstViewController: UIViewController, SeguePerformer {
@@ -76,7 +73,7 @@ class SecondViewController: UIViewController {
   
   @IBAction func pushFirstScene(_ sender: Any?) {
     // Example how to load an instance of FirstViewController from Main.storyboard.
-    let viewController = AppStoryboard<FirstViewController>.main.scene
+    let viewController = AppStoryboard.main.scene() as FirstViewController
     navigationController?.pushViewController(viewController, animated: true)
   }
   

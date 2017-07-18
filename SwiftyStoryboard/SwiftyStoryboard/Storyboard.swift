@@ -10,10 +10,6 @@ import UIKit
 
 /// Represents a type that should load an `UIStoryboard` instance.
 public protocol StoryboardType {
-  
-  /// A type that represents a `UIViewController` subclass.
-  associatedtype Scene: UIViewController
-  
   /// The bundle containing the storyboard file and its related resources. If you specify nil, this method looks in the main bundle of the current application.
   var bundle: Bundle? { get }
   
@@ -32,6 +28,9 @@ public extension StoryboardType {
     return storyboard.instantiateInitialViewController()
   }
   
+  func viewController(withIdentifier sceneIdentifier: String) -> UIViewController {
+    return storyboard.instantiateViewController(withIdentifier: sceneIdentifier)
+  }
 }
 
 public extension StoryboardType where Self: RawRepresentable, Self.RawValue == String {
@@ -42,11 +41,11 @@ public extension StoryboardType where Self: RawRepresentable, Self.RawValue == S
   
 }
 
-public extension StoryboardType where Self.Scene: StoryboardSceneType {
+public extension StoryboardType {
   
-  /// An **new** `Scene` instance.
-  var scene: Scene {
-    return storyboard.instantiateViewController(withIdentifier: Scene.sceneIdentifier) as! Scene
+  /// An **new** instance of `Scene` type.
+  func scene<Scene: StoryboardSceneType>() -> Scene {
+    return viewController(withIdentifier: Scene.sceneIdentifier) as! Scene
   }
   
 }
