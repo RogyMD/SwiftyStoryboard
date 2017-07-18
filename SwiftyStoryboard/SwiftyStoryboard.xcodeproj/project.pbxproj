@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		C453F3551EFD06D100B91856 /* SwiftyStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = C453F3531EFD06D100B91856 /* SwiftyStoryboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C453F35E1EFD06F200B91856 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453F35B1EFD06F200B91856 /* Storyboard.swift */; };
-		C453F35F1EFD06F200B91856 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453F35C1EFD06F200B91856 /* Scene.swift */; };
-		C453F3601EFD06F200B91856 /* Segue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453F35D1EFD06F200B91856 /* Segue.swift */; };
+		C453F35F1EFD06F200B91856 /* StoryboardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453F35C1EFD06F200B91856 /* StoryboardScene.swift */; };
+		C453F3601EFD06F200B91856 /* StoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453F35D1EFD06F200B91856 /* StoryboardSegue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,8 +18,8 @@
 		C453F3531EFD06D100B91856 /* SwiftyStoryboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyStoryboard.h; sourceTree = "<group>"; };
 		C453F3541EFD06D100B91856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C453F35B1EFD06F200B91856 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
-		C453F35C1EFD06F200B91856 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		C453F35D1EFD06F200B91856 /* Segue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segue.swift; sourceTree = "<group>"; };
+		C453F35C1EFD06F200B91856 /* StoryboardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardScene.swift; sourceTree = "<group>"; };
+		C453F35D1EFD06F200B91856 /* StoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardSegue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +54,8 @@
 			children = (
 				C453F3531EFD06D100B91856 /* SwiftyStoryboard.h */,
 				C453F35B1EFD06F200B91856 /* Storyboard.swift */,
-				C453F35C1EFD06F200B91856 /* Scene.swift */,
-				C453F35D1EFD06F200B91856 /* Segue.swift */,
+				C453F35C1EFD06F200B91856 /* StoryboardScene.swift */,
+				C453F35D1EFD06F200B91856 /* StoryboardSegue.swift */,
 				C453F3541EFD06D100B91856 /* Info.plist */,
 			);
 			path = SwiftyStoryboard;
@@ -142,9 +142,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C453F35F1EFD06F200B91856 /* Scene.swift in Sources */,
+				C453F35F1EFD06F200B91856 /* StoryboardScene.swift in Sources */,
 				C453F35E1EFD06F200B91856 /* Storyboard.swift in Sources */,
-				C453F3601EFD06F200B91856 /* Segue.swift in Sources */,
+				C453F3601EFD06F200B91856 /* StoryboardSegue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

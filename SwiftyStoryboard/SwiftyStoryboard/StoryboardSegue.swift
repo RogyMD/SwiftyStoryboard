@@ -9,7 +9,7 @@
 import UIKit
 
 /// Represents a `UIStoryboardSegue`'s identifier in `UIStoryboard`.
-public protocol Segue {
+public protocol StoryboardSegueType {
   
   /// The identifier for the segue object.
   /// You assign identifiers to your segues in Interface Builder. An identifier is a string that your application uses to distinguish one segue from another. For example, if you have a source view controller that can segue to two or more different destination view controllers, you would assign different identifiers to each segue so that the source view controller’s prepareForSegue:sender: method could tell them apart and prepare each segue appropriately.
@@ -17,7 +17,7 @@ public protocol Segue {
   
 }
 
-public extension Segue where Self: RawRepresentable, Self.RawValue == String {
+public extension StoryboardSegueType where Self: RawRepresentable, Self.RawValue == String {
   
   var segueID: String {
     return rawValue
@@ -28,8 +28,7 @@ public extension Segue where Self: RawRepresentable, Self.RawValue == String {
 /// Represents an object that can perform segue.
 public protocol SeguePerformer {
   
-  associatedtype SegueType: Segue
-  
+  associatedtype SegueType: StoryboardSegueType
   
   /// Initiates the segue with the specified identifier from the current segue performer's storyboard file.
   ///
