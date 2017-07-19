@@ -16,39 +16,19 @@ enum AppStoryboard: String, StoryboardType {
 
 
 /// Struct example of `StoryboardType`.
-/// - Important: In case that `StoryboardType` is a `struct` you are **forced to adopt** `protocol` `ExpressibleByStringLiteral`.
-struct AppStoryboardStruct: RawRepresentable, StoryboardType, ExpressibleByStringLiteral {
+struct AppStoryboardStruct: RawRepresentable, StoryboardType {
   typealias RawValue = String
   
   let rawValue: String
   
-  init?(rawValue: String) {
+  init(rawValue: String) {
     self.rawValue = rawValue
   }
   
-  init(stringLiteral value: String) {
-    rawValue = value
-  }
-  
-  init(unicodeScalarLiteral value: String) {
-    rawValue = value
-  }
-  
-  init(extendedGraphemeClusterLiteral value: String) {
-    rawValue = value
-  }
-  
-  static var main: AppStoryboardStruct { return "Main" }
+  static var main = AppStoryboardStruct(rawValue: "Main")
 }
 
-class FirstViewController: UIViewController, SeguePerformer {
-  // Define `SegyeType` as nested enum `Segue`
-  typealias SegueType = Segue
-  
-  // Nested enum `Segue` with that define `UIStoryboardSegue` identifier as `case`
-  enum Segue: String, StoryboardSegueType {
-    case second
-  }
+class FirstViewController: UIViewController {
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     super.prepare(for: segue, sender: sender)
@@ -85,6 +65,16 @@ extension FirstViewController: StoryboardSceneType {
   }
 }
 
+extension FirstViewController: SeguePerformer {
+  // Define `SegueType` as nested enum `Segue`
+  typealias SegueType = Segue
+  
+  // Nested enum `Segue` with defined `UIStoryboardSegue` identifier as implicit `rawValue`
+  enum Segue: String, StoryboardSegueType {
+    case second
+  }
+}
+
 class SecondViewController: UIViewController {
   
   @IBAction func pushFirstScene(_ sender: Any?) {
@@ -99,8 +89,6 @@ class SecondViewController: UIViewController {
 }
 
 extension SecondViewController: StoryboardSceneType {
-  typealias Storyboard = AppStoryboardStruct
-  
   class var mainStoryboard: AppStoryboardStruct {
     return .main
   }
