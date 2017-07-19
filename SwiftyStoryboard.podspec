@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftyStoryboard"
-  s.version      = "0.1.3"
+  s.version      = "0.1.4"
   s.summary      = "A framework that helps you to operate with UIStoryboard and it’s components."
   s.homepage     = "https://github.com/RogyMD/SwiftyStoryboard"
   s.license      = { :type => "MIT" }

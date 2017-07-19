@@ -16,38 +16,27 @@ enum AppStoryboard: String, StoryboardType {
 
 
 /// Struct example of `StoryboardType`.
-/// - Important: In case that `StoryboardType` is a `struct` you are **forced to adopt** `protocol` `ExpressibleByStringLiteral`.
-struct AppStoryboardStruct: RawRepresentable, StoryboardType, ExpressibleByStringLiteral {
+struct AppStoryboardStruct: RawRepresentable, StoryboardType {
   typealias RawValue = String
   
   let rawValue: String
   
-  init?(rawValue: String) {
+  init(rawValue: String) {
     self.rawValue = rawValue
   }
   
-  init(stringLiteral value: String) {
-    rawValue = value
-  }
-  
-  init(unicodeScalarLiteral value: String) {
-    rawValue = value
-  }
-  
-  init(extendedGraphemeClusterLiteral value: String) {
-    rawValue = value
-  }
-  
-  static var main: AppStoryboardStruct { return "Main" }
+  static var main = AppStoryboardStruct(rawValue: "Main")
 }
 
-class FirstViewController: UIViewController, SeguePerformer {
-  // Define `SegyeType` as nested enum `Segue`
-  typealias SegueType = Segue
+class FirstViewController: UIViewController {
   
-  // Nested enum `Segue` with that define `UIStoryboardSegue` identifier as `case`
-  enum Segue: String, StoryboardSegueType {
-    case second
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
+    
+    // `Segue` should be initialized with `UIStoryboardSegue` instance.
+    if let segue = Segue(segue) {
+      NSLog("Segue('\(segue.segueID)') was performed.")
+    }
   }
   
   @IBAction func performSecondSegue(_ sender: Any?) {
@@ -63,9 +52,26 @@ class FirstViewController: UIViewController, SeguePerformer {
 }
 
 extension FirstViewController: StoryboardSceneType {
-  // Defined custom scene identifier
-  class var sceneIdentifier: String {
-    return "First"
+  // Define custom scene identifier.
+  class func sceneIdentifier(in storyboard: AppStoryboard) -> String? {
+    switch storyboard {
+    case .main:
+      return "First"
+    }
+  }
+  
+  class var mainStoryboard: AppStoryboard {
+    return .main
+  }
+}
+
+extension FirstViewController: SeguePerformer {
+  // Define `SegueType` as nested enum `Segue`
+  typealias SegueType = Segue
+  
+  // Nested enum `Segue` with defined `UIStoryboardSegue` identifier as implicit `rawValue`
+  enum Segue: String, StoryboardSegueType {
+    case second
   }
 }
 
@@ -73,11 +79,18 @@ class SecondViewController: UIViewController {
   
   @IBAction func pushFirstScene(_ sender: Any?) {
     // Example how to load an instance of FirstViewController from Main.storyboard.
-    let viewController = AppStoryboard.main.scene() as FirstViewController
+    let viewController = FirstViewController.scene
+    // Other examples:
+    //  let viewController = AppStoryboard.main.scene() as FirstViewController // load scene from custom storyboard
+    //  let viewController = FirstViewController.scene(in: .main) // load scene from custom storyboard
     navigationController?.pushViewController(viewController, animated: true)
   }
   
 }
 
-extension SecondViewController: StoryboardSceneType {}
+extension SecondViewController: StoryboardSceneType {
+  class var mainStoryboard: AppStoryboardStruct {
+    return .main
+  }
+}
 

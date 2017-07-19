@@ -44,8 +44,12 @@ public extension StoryboardType where Self: RawRepresentable, Self.RawValue == S
 public extension StoryboardType {
   
   /// An **new** instance of `Scene` type.
-  func scene<Scene: StoryboardSceneType>() -> Scene {
-    return viewController(withIdentifier: Scene.sceneIdentifier) as! Scene
+  func scene<Scene: StoryboardSceneType>() -> Scene where Scene.Storyboard == Self {
+    guard let sceneIdentifier = Scene.sceneIdentifier(in: self) else {
+      fatalError("Undefined scene identifier for storyboard: \(String(describing: self))")
+    }
+    
+    return viewController(withIdentifier: sceneIdentifier) as! Scene
   }
   
 }
