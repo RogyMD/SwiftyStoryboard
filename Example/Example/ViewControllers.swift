@@ -50,6 +50,15 @@ class FirstViewController: UIViewController, SeguePerformer {
     case second
   }
   
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
+    
+    // `Segue` should be initialized with `UIStoryboardSegue` instance.
+    if let segue = Segue(segue) {
+      NSLog("Segue('\(segue.segueID)') was performed.")
+    }
+  }
+  
   @IBAction func performSecondSegue(_ sender: Any?) {
     // Perform storyboard segue using perform(segue:sender:) defined method in `SeguePerformer`
     perform(segue: .second)
@@ -63,9 +72,16 @@ class FirstViewController: UIViewController, SeguePerformer {
 }
 
 extension FirstViewController: StoryboardSceneType {
-  // Defined custom scene identifier
-  class var sceneIdentifier: String {
-    return "First"
+  // Define custom scene identifier.
+  class func sceneIdentifier(in storyboard: AppStoryboard) -> String? {
+    switch storyboard {
+    case .main:
+      return "First"
+    }
+  }
+  
+  class var mainStoryboard: AppStoryboard {
+    return .main
   }
 }
 
@@ -73,11 +89,20 @@ class SecondViewController: UIViewController {
   
   @IBAction func pushFirstScene(_ sender: Any?) {
     // Example how to load an instance of FirstViewController from Main.storyboard.
-    let viewController = AppStoryboard.main.scene() as FirstViewController
+    let viewController = FirstViewController.scene
+    // Other examples:
+    //  let viewController = AppStoryboard.main.scene() as FirstViewController // load scene from custom storyboard
+    //  let viewController = FirstViewController.scene(in: .main) // load scene from custom storyboard
     navigationController?.pushViewController(viewController, animated: true)
   }
   
 }
 
-extension SecondViewController: StoryboardSceneType {}
+extension SecondViewController: StoryboardSceneType {
+  typealias Storyboard = AppStoryboardStruct
+  
+  class var mainStoryboard: AppStoryboardStruct {
+    return .main
+  }
+}
 
