@@ -19,6 +19,14 @@ public protocol StoryboardSegueType {
 
 public extension StoryboardSegueType where Self: RawRepresentable, Self.RawValue == String {
   
+  init?(_ segue: UIStoryboardSegue) {
+    guard let segueID = segue.identifier, let segueType = Self.init(rawValue: segueID) else {
+      return nil
+    }
+    
+    self = segueType
+  }
+  
   var segueID: String {
     return rawValue
   }
