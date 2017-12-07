@@ -84,6 +84,10 @@ extension ViewController: StoryboardSceneType {
 ```swift
 let vc = ViewController.scene
 ```
+**Old:**
+```swift
+let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+```
 
 ### Create a SeguePerformer
 
@@ -108,6 +112,10 @@ Perform segues easier.
 ```swift
 perform(segue: .second)
 ```
+**Old:**
+```swift
+performSegue(withIdentifier: "second", sender: nil)
+```
 
 Handle segues in more _swifty_ way.
 
@@ -119,8 +127,12 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if let segue = Segue(segue) {
       NSLog("Segue('\(segue.segueID)') was performed.")
     }
-}
 
+    // Old
+    if let identifier = segue.identifier, identifier == "second" {
+      NSLog("Segue('\(identifier)') was performed.")
+    }
+}
 ```
 
 ## License
